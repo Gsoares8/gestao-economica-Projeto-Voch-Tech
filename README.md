@@ -1,59 +1,100 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# Sistema de Gestão Econômica
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+Este é um sistema de gestão para grupos econômicos, bandeiras, unidades e colaboradores, desenvolvido em Laravel 10 com Livewire.
 
-## About Laravel
+## 🚀 Funcionalidades
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+* CRUD completo de Grupos Econômicos
+* CRUD completo de Bandeiras (com relacionamento)
+* CRUD completo de Unidades (com relacionamento)
+* CRUD completo de Colaboradores (com relacionamento)
+* Relatório de Colaboradores com filtros em cascata
+* Autenticação com Laravel Breeze
+* Exportação de Relatórios para Excel (com Fila)
+* Auditoria de todas as ações (Create, Update, Delete)
+* Testes unitários (Pest)
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+## 🛠️ Stack Tecnológica
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+* **Laravel 10**
+* **PHP 8.x**
+* **Livewire 3**
+* **MySQL**
+* **Laravel Sail** (Docker)
+* **Redis** (para Filas)
+* **Maatwebsite/Excel**
+* **Laravel Auditing**
 
-## Learning Laravel
+---
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework. You can also check out [Laravel Learn](https://laravel.com/learn), where you will be guided through building a modern Laravel application.
+## 🏁 Como Rodar (Instalação)
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+### Pré-requisitos
 
-## Laravel Sponsors
+* [Docker Desktop](https://www.docker.com/products/docker-desktop/)
+* [WSL 2](https://learn.microsoft.com/pt-br/windows/wsl/install) (para usuários Windows)
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+### Passos da Instalação
 
-### Premium Partners
+1.  **Clone o repositório:**
+    ```bash
+    # SUBSTITUA PELA URL DO SEU REPOSITÓRIO
+    git clone [https://github.com/Gsoares8/gestao-economica-Projeto-Voch-Tech](https://github.com/Gsoares8/gestao-economica-Projeto-Voch-Tech)
+    cd gestao-economica-Projeto-Voch-Tech
+    ```
 
-- **[Vehikl](https://vehikl.com)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Redberry](https://redberry.international/laravel-development)**
-- **[Active Logic](https://activelogic.com)**
+2.  **Copie o arquivo de ambiente:**
+    ```bash
+    cp .env.example .env
+    ```
 
-## Contributing
+3.  **Inicie o Laravel Sail:**
+    (Este comando irá baixar as imagens Docker do PHP, MySQL e Redis e "ligar" o ambiente. Pode demorar na primeira vez.)
+    ```bash
+    ./vendor/bin/sail up -d
+    ```
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+4.  **Instale as dependências do Composer:**
+    ```bash
+    ./vendor/bin/sail composer install
+    ```
 
-## Code of Conduct
+5.  **Gere a Chave da Aplicação:**
+    ```bash
+    ./vendor/bin/sail php artisan key:generate
+    ```
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+6.  **Rode as Migrações (Crie as tabelas):**
+    (Isso irá criar todas as tabelas, incluindo `users`, `audits`, `grupos_economicos`, etc.)
+    ```bash
+    ./vendor/bin/sail php artisan migrate
+    ```
 
-## Security Vulnerabilities
+7.  **Crie o Link de Storage:**
+    (Necessário para que os relatórios exportados sejam acessíveis)
+    ```bash
+    ./vendor/bin/sail php artisan storage:link
+    ```
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+8.  **Instale as dependências do Front-end:**
+    ```bash
+    ./vendor/bin/sail npm install
+    ```
 
-## License
+9.  **Compile o Front-end:**
+    ```bash
+    ./vendor/bin/sail npm run build
+    ```
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+10. **Inicie o "Trabalhador" da Fila (Obrigatório):**
+    (Este comando precisa ficar rodando em um terminal separado para processar as exportações de Excel.)
+    ```bash
+    ./vendor/bin/sail php artisan queue:work
+    ```
+
+### 🚀 Acesso
+
+Após todos os passos, a aplicação estará rodando!
+
+* **URL:** [http://localhost](http://localhost)
+* **Usuário:** Você pode se registrar na tela de "Register" para criar seu primeiro usuário.
